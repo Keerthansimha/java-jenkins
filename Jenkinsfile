@@ -16,6 +16,7 @@ pipeline {
                 ])
             }
         }
+
         stage('Build') {
             steps {
                 script {
@@ -27,6 +28,57 @@ pipeline {
                     }
                 }
             }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    // Run unit tests
+                    if (isUnix()) {
+                        sh 'mvn test'
+                    } else {
+                        bat 'mvn test'
+                    }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    // Deploy to the environment (e.g., dev, test, or staging)
+                    if (isUnix()) {
+                        sh 'mvn deploy'
+                    } else {
+                        bat 'mvn deploy'
+                    }
+                }
+            }
+        }
+
+        stage('Clean') {
+            steps {
+                script {
+                    // Clean up the workspace
+                    if (isUnix()) {
+                        sh 'mvn clean'
+                    } else {
+                        bat 'mvn clean'
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build and deployment successful!'
+        }
+        failure {
+            echo 'Build or deployment failed.'
+        }
+        always {
+            cleanWs()
         }
     }
 }
