@@ -31,14 +31,4 @@ pipeline {
                 }
             }
         }
-
-        stage('Trigger Next Job') {
-            steps {
-                script {
-                    // Trigger the next job (e.g., testing-pipeline)
-                    build job: 'testing-pipelne', wait: true
-                }
-            }
-        }
-    }
 }
