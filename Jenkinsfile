@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'maven-project' // Replace with your agent's label
+}
 
     tools {
         maven 'maven'
@@ -16,6 +18,7 @@ pipeline {
                 ])
             }
         }
+
         stage('Build') {
             steps {
                 script {
@@ -25,6 +28,15 @@ pipeline {
                     } else {
                         bat 'mvn package'
                     }
+                }
+            }
+        }
+
+        stage('Trigger Next Job') {
+            steps {
+                script {
+                    // Trigger the next job (e.g., testing-pipeline)
+                    build job: 'testing-pipeline', wait: true
                 }
             }
         }
