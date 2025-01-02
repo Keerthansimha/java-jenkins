@@ -1,7 +1,7 @@
 pipeline {
     agent {
         label 'maven-project' // Replace with your agent's label
-}
+    }
 
     tools {
         maven 'maven'
@@ -30,5 +30,6 @@ pipeline {
                     }
                 }
             }
-        }
+         }
+    }
 }
