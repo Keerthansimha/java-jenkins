@@ -36,7 +36,7 @@ pipeline {
             steps {
                 script {
                     // Trigger the next job (e.g., testing-pipeline)
-                    build job: 'testing-pipeline', wait: true
+                    build job: 'testing-pipelne', wait: true
                 }
             }
         }
